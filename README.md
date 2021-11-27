@@ -10,7 +10,7 @@ If gen_instance.py is available on your path, you simply navigate to your direct
     
 This will create a new "instantiation_templates" subdirectory containing the instantiation templates for all .vhd files with containing an entity declaration. 
 
-Developed with Python 3.8
+Developed with Python 3.8 on Ubuntu 20.04 (WSL 2.0)
 
 ### Running the Example 
     gen_instance.py example_src
