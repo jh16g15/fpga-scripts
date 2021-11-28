@@ -138,7 +138,7 @@ def gen_template(src_name, entity_name, generics, ports, library="work"):
                 template.append("        " + generic +
                                 " => " + generic + "," + "\n")
 
-        template.append(")" + "\n")
+        template.append("    )" + "\n")
 
     num_ports = len(ports)
     if num_ports != 0:
@@ -150,7 +150,7 @@ def gen_template(src_name, entity_name, generics, ports, library="work"):
             else:
                 template.append("        " + port + " => " + port + "," + "\n")
 
-        template.append(");" + "\n")
+        template.append("    );" + "\n")
 
     template.append("" + "\n")
     return template
