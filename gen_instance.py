@@ -43,14 +43,22 @@ def parse_vhdl_file(filename):
                     print("Creating template " + template_filename +
                           " for entity " + entity_name)
 
-            # This is the end of our entity declaration
-            if "end " in line.lower() and  entity_name.lower() in line.lower() and in_entity:
+            # There are several ways to end our entity declaration
+            #
+            # 1. end;
+            # 2. end entity;
+            # 3. end $NAME;
+            # 4. end ;
+            ##
+            first_word = get_first_word(line.lower())
+
+            if ("end" == first_word or "end;" == first_word) and in_entity:
                 in_generics = False
                 in_ports = False
                 in_entity = False
                 break
 
-            # TODO: handle generic/port opening on same line as a generic/port
+            # TODO: handle generic/port region start on the same line as a generic/port declatarion
             if in_entity:
                 if "generic" in line.lower() and (not in_generics) and (not in_ports):
                     # move into finding the Generics
@@ -165,6 +173,9 @@ def filter_vhdl_comment(line):
     return line[0]
 
 
+def get_first_word(line):
+    line = line.split(" ")
+    return line[0].strip()  # remove newlines on the end
 # def try_funcs():
 
 #     get_generic_port_name(" ); ")
@@ -189,7 +200,7 @@ def main(args):
     # nargs = ? means could be 0 or 1 arg provided
     parser.add_argument(
         'dir', nargs='?', default=os.getcwd(), type=pathlib.Path)
-        # 'dir', nargs='?', default="/home/joehi/fpga-scripts/example_src", type=pathlib.Path)      # for the VSCode debugger
+    # 'dir', nargs='?', default="/home/joehi/fpga-scripts/example_src", type=pathlib.Path)      # for the VSCode debugger
 
     args = parser.parse_args()
 
